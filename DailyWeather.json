@@ -1,0 +1,108 @@
+{
+  "name": "DailyWeather",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e9e53d62-c775-4eaf-9014-94a8f19f72a8",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "cityName": "Nellore"
+      },
+      "type": "n8n-nodes-base.openWeatherMap",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "68caf7d5-8e09-4aee-a5aa-9a107b8e0273",
+      "name": "OpenWeatherMap",
+      "credentials": {
+        "openWeatherMapApi": {
+          "id": "wdek3Lk6NHjCvWxs",
+          "name": "OpenWeatherMap account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "marampadmaja6@gmail.com",
+        "subject": "Weather Report",
+        "message": "=Good Morning! The current temperature is  {{ $json.main.temp }} in {{ $json.name }} with a temperature range {{ $json.main.temp_max }} to \n{{ $json.main.temp_min }} and it feels like \n{{ $json.main.feels_like }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "41336ed6-4b07-43d1-a12d-77610609171f",
+      "name": "Send a message",
+      "webhookId": "6a9448a7-46ef-4532-8993-791cd6895f1a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lPkMGkxbtnUXstBK",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenWeatherMap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenWeatherMap": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "506313c5-4510-4f13-a25a-6eeaa5a8ad02",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f3e22d23453394d6ff9892c072af3968471113b5e880608bac9d4e79cd2ff22"
+  },
+  "id": "0yab0jOVUjICogOx",
+  "tags": []
+}
